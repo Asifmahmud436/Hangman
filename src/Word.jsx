@@ -1,5 +1,5 @@
 export default function Word(props){
     return(
-        <p>{props.value}</p>
+        {props.isFound==true ? <p>{props.value}</p> : '_'}
     )
 }
