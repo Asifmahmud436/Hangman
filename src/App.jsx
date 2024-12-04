@@ -2,12 +2,14 @@ import { useState } from 'react'
 import Letter from './Letter'
 import Word from './Word'
 import { nanoid } from 'nanoid'
+import Confetti from 'react-confetti'
 import './App.css'
 
 function App() {
   const [life,setLife] = useState(3)
   const [word ,setWord] = useState(generateRandomWord())
   const [letters,setLetters] = useState(generateButtons())
+  const gameWon = word.every(w => w.isFound)
   
   function generateButtons(){
     let letterArray = []
@@ -38,30 +40,21 @@ function App() {
   }
 
   function togglePressed(id,val){
-    
     setLetters(x => x.map(items =>
       items.id==id ? {...items,isPressed:!items.isPressed} : items
     ))
 
-    let foundMatch = false
-
     setWord(x => x.map(items =>
       {
-        
         if(items.val==val){
-          foundMatch = true
           return {...items,isFound:!items.isFound}
           
         }
         else{
           return items
         }
-        
       }
     ))
-    if(!foundMatch){
-      setLife(prev=>prev-1)
-    }
   }
 
   function handleReset(){
@@ -89,6 +82,7 @@ function App() {
   console.log(word)
   return (
     <>
+      {gameWon && <Confetti/>}
       <div>
         <h3>Life remaining: {life}</h3>
         
