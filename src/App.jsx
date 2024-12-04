@@ -24,7 +24,9 @@ function App() {
       <div>
         <h3>Life remaining: {life}</h3>
         <h1>Word to guess: {word}</h1>
-        {letterList}
+        <div className='letter-list'>
+          {letterList}
+        </div>
       </div>
     </>
   )
