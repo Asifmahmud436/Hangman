@@ -9,7 +9,7 @@ function App() {
   const [life,setLife] = useState(3)
   const [word ,setWord] = useState(generateRandomWord())
   const [letters,setLetters] = useState(generateButtons())
-  const gameWon = word.every(w => w.isFound)
+  const gameWon = word.every(wordPiece => wordPiece.isFound)
   
   function generateButtons(){
     let letterArray = []
@@ -45,15 +45,7 @@ function App() {
     ))
 
     setWord(x => x.map(items =>
-      {
-        if(items.val==val){
-          return {...items,isFound:!items.isFound}
-          
-        }
-        else{
-          return items
-        }
-      }
+      items.val==val ? {...items,isFound:!items.isFound} : items
     ))
     if (!word.find(item => item.val === val && item.isFound)) {
       handleLives(val);
@@ -69,7 +61,6 @@ function App() {
   function handleLives(val){
     let flag = false;
     for(let i = 0; i < word.length; i++){
-      console.log(word)
       if(word[i].val==val){
         flag = true;
         break;
@@ -95,13 +86,13 @@ function App() {
     found={x.isFound}
     uniqueVal={x.id}
     />)
-  
-  console.log(word)
+
   return (
     <>
       {gameWon && <Confetti/>}
-      <div>
-        <h3>Life remaining: {life}</h3>
+      {!gameWon ? <div>
+        <h1>HangMan</h1>
+        <h3 className='lifeHeader'>Life remaining: <span className='lifeColor'>{life}</span></h3>
         
         <div className='word-list'>
           {wordList}
@@ -117,9 +108,15 @@ function App() {
           <button onClick={handleReset}>Restart</button>
         </div> 
         }
-        
-
       </div>
+      :
+      <div className='winBanner'>
+        <h1>Congratulations!</h1>  
+        <h3>You won the game</h3>
+        <button onClick={handleReset}>Play again</button>
+      </div>
+      }
+      
     </>
   )
 }

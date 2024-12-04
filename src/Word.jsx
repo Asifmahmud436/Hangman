@@ -1,7 +1,7 @@
 export default function Word(props){
     return(
         <div>
-            {props.found ? <p>{props.value}</p> : <p>_</p>}
+            {props.found ? <p className="filledBox">{props.value}</p> : <div className="emptyBox"></div>}
         </div>
         
     )
