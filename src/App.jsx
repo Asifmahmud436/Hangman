@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Letter from './Letter'
 import Word from './Word'
+import Ans from './Ans'
 import { nanoid } from 'nanoid'
 import Confetti from 'react-confetti'
 import './App.css'
@@ -10,6 +11,7 @@ function App() {
   const [word ,setWord] = useState(generateRandomWord())
   const [letters,setLetters] = useState(generateButtons())
   const gameWon = word.every(wordPiece => wordPiece.isFound)
+  const [ans,setAns] = useState(false)
   
   function generateButtons(){
     let letterArray = []
@@ -56,6 +58,7 @@ function App() {
     setLife(3)
     setWord(generateRandomWord())
     setLetters(generateButtons())
+    setAns(false)
   }
 
   function handleLives(val){
@@ -71,7 +74,9 @@ function App() {
     }
   }
 
-  
+  function toggleAns(){
+    setAns(prev => !prev)
+  }
 
   const letterList = letters.map(x => <Letter 
     key={x.id} 
@@ -85,6 +90,10 @@ function App() {
     value={x.val} 
     found={x.isFound}
     uniqueVal={x.id}
+    />)
+  const ansList = word.map(x => <Ans 
+    key={x.id} 
+    value={x.val} 
     />)
 
   return (
@@ -113,7 +122,11 @@ function App() {
           <button onClick={handleReset}>New Game</button>
         </div> 
         }
+        <div className='showAns'>
+          {ans==true ? <button>{ansList}</button> : <button onClick={toggleAns}>Show Answer</button>}
+        </div>
       </div>
+      
       :
       <div className='winBanner'>
         <h1>Congratulations!</h1>  
@@ -121,6 +134,7 @@ function App() {
         <button onClick={handleReset}>Play again</button>
       </div>
       }
+      
       
     </>
   )
