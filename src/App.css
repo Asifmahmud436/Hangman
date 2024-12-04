@@ -76,9 +76,17 @@
   background-color: gray;
   border-radius: 6px;
   border-bottom: 4px solid green;
-  color: #90EE90;
-  font-weight: 600;
+  color: darkgreen;
+  font-weight: 900;
 }
 .lifeHeader{
   padding: 20px ;
+}
+.nextGame{
+  margin-top: 40px;
+}
+.lostGame{
+  font-size: 1.8rem;
+  color: yellow;
+  font-weight: 600;
 }

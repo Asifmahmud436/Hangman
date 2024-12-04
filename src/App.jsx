@@ -54,8 +54,8 @@ function App() {
 
   function handleReset(){
     setLife(3)
-    setWord(generateRandomWord)
-    setLetters(generateButtons)
+    setWord(generateRandomWord())
+    setLetters(generateButtons())
   }
 
   function handleLives(val){
@@ -91,21 +91,26 @@ function App() {
     <>
       {gameWon && <Confetti/>}
       {!gameWon ? <div>
-        <h1>HangMan</h1>
+        <h1>Hangman</h1>
         <h3 className='lifeHeader'>Life remaining: <span className='lifeColor'>{life}</span></h3>
         
         <div className='word-list'>
           {wordList}
         </div>
         {life>0 && 
-        <div className='letter-list'>
+        <div>
+          <div className='letter-list'>
           {letterList}
-        </div> 
+          
+        </div>
+        <button onClick={handleReset} className='nextGame'>New One</button>
+        </div>
+         
         }
         {life<=0 && 
         <div>
-          <p>You lost the Game!</p>
-          <button onClick={handleReset}>Restart</button>
+          <p className='lostGame'>You lost the Game!</p>
+          <button onClick={handleReset}>New Game</button>
         </div> 
         }
       </div>
