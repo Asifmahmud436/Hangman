@@ -20,6 +20,7 @@ function App() {
     }
     return letterArray
   }
+
   function generateRandomWord(){
     const characters = 'QWERTYUIOPASDFGHJKLMNBVCXZ';
     const wordArray = []
@@ -45,8 +46,6 @@ function App() {
     let foundMatch = false
 
     setWord(x => x.map(items =>
-      // items.val==val ? {...items,isFound:!items.isFound} : items
-      
       {
         
         if(items.val==val){
@@ -63,6 +62,12 @@ function App() {
     if(!foundMatch){
       setLife(prev=>prev-1)
     }
+  }
+
+  function handleReset(){
+    setLife(3)
+    setWord(generateRandomWord)
+    setLetters(generateButtons)
   }
 
   
@@ -90,9 +95,19 @@ function App() {
         <div className='word-list'>
           {wordList}
         </div>
+        {life>0 && 
         <div className='letter-list'>
           {letterList}
-        </div>
+        </div> 
+        }
+        {life<=0 && 
+        <div>
+          <p>You lost the Game!</p>
+          <button onClick={handleReset}>Restart</button>
+        </div> 
+        }
+        
+
       </div>
     </>
   )
