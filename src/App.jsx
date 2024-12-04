@@ -20,11 +20,20 @@ function App() {
     return letterArray
   }
   
+  function togglePressed(id){
+    setLetters(x => x.map(items =>
+      items.id==id ? {...items,isPressed:!items.isPressed} : items
+    ))
+  }
+
   const letterList = letters.map(x => <Letter 
     key={x.id} 
     value={x.val} 
-    pressed={x.isPressed}/>)
-
+    pressed={x.isPressed}
+    uniqueVal={x.id}
+    handleClick={togglePressed}
+    />)
+  
   function generateRandomWord(){
     const characters = 'QWERTYUIOPASDFGHJKLMNBVCXZ';
     let randomWord = '';
