@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Letter from './Letter'
+import Word from './Word'
 import { nanoid } from 'nanoid'
 import './App.css'
 
@@ -33,21 +34,37 @@ function App() {
     uniqueVal={x.id}
     handleClick={togglePressed}
     />)
+  const wordList = word.map(x => <Word 
+    key={x.id} 
+    value={x.val} 
+    pressed={x.isFound}
+    uniqueVal={x.id}
+    />)
   
   function generateRandomWord(){
     const characters = 'QWERTYUIOPASDFGHJKLMNBVCXZ';
-    let randomWord = '';
+    const wordArray = []
     for(let i=0;i<5;i++){
       const randomIndex = Math.floor(Math.random()*characters.length)
-      randomWord += characters[randomIndex]
+      let wordElement = {
+                        val: characters[randomIndex],
+                        isFound:false,
+                        id:nanoid()
+      }
+      wordArray.push(wordElement)
+      
     }
-    return randomWord;
+    return wordArray;
   }
+  console.log(generateRandomWord())
   return (
     <>
       <div>
         <h3>Life remaining: {life}</h3>
-        <h1>{word}</h1>
+        {/* <h1>{word}</h1> */}
+        <div className='word-list'>
+          {wordList}
+        </div>
         <div className='letter-list'>
           {letterList}
         </div>
