@@ -123,7 +123,7 @@ function App() {
         </div> 
         }
         <div className='showAns'>
-          {ans==true ? <button>{ansList}</button> : <button onClick={toggleAns}>Show Answer</button>}
+          {ans==true ? <button onClick={toggleAns}>{ansList}</button> : <button onClick={toggleAns}>Show Answer</button>}
         </div>
       </div>
       
