@@ -55,12 +55,29 @@ function App() {
         }
       }
     ))
+    if (!word.find(item => item.val === val && item.isFound)) {
+      handleLives(val);
+    }
   }
 
   function handleReset(){
     setLife(3)
     setWord(generateRandomWord)
     setLetters(generateButtons)
+  }
+
+  function handleLives(val){
+    let flag = false;
+    for(let i = 0; i < word.length; i++){
+      console.log(word)
+      if(word[i].val==val){
+        flag = true;
+        break;
+      }
+    }
+    if(!flag){
+      setLife(prev => prev-1)
+    }
   }
 
   
