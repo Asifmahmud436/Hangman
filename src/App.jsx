@@ -5,11 +5,11 @@ import { nanoid } from 'nanoid'
 import './App.css'
 
 function App() {
-  const [life,setLife] = useState(5)
+  const [life,setLife] = useState(3)
   const [word ,setWord] = useState(generateRandomWord())
-  const [letters,setLetters] = useState(createButtons())
+  const [letters,setLetters] = useState(generateButtons())
   
-  function createButtons(){
+  function generateButtons(){
     let letterArray = []
     for(let i = 65; i <= 90; i++){
       let letterElement = {val:String.fromCharCode(i),
@@ -20,27 +20,6 @@ function App() {
     }
     return letterArray
   }
-  
-  function togglePressed(id){
-    setLetters(x => x.map(items =>
-      items.id==id ? {...items,isPressed:!items.isPressed} : items
-    ))
-  }
-
-  const letterList = letters.map(x => <Letter 
-    key={x.id} 
-    value={x.val} 
-    pressed={x.isPressed}
-    uniqueVal={x.id}
-    handleClick={togglePressed}
-    />)
-  const wordList = word.map(x => <Word 
-    key={x.id} 
-    value={x.val} 
-    pressed={x.isFound}
-    uniqueVal={x.id}
-    />)
-  
   function generateRandomWord(){
     const characters = 'QWERTYUIOPASDFGHJKLMNBVCXZ';
     const wordArray = []
@@ -56,12 +35,58 @@ function App() {
     }
     return wordArray;
   }
-  console.log(generateRandomWord())
+
+  function togglePressed(id,val){
+    
+    setLetters(x => x.map(items =>
+      items.id==id ? {...items,isPressed:!items.isPressed} : items
+    ))
+
+    let foundMatch = false
+
+    setWord(x => x.map(items =>
+      // items.val==val ? {...items,isFound:!items.isFound} : items
+      
+      {
+        
+        if(items.val==val){
+          foundMatch = true
+          return {...items,isFound:!items.isFound}
+          
+        }
+        else{
+          return items
+        }
+        
+      }
+    ))
+    if(!foundMatch){
+      setLife(prev=>prev-1)
+    }
+  }
+
+  
+
+  const letterList = letters.map(x => <Letter 
+    key={x.id} 
+    value={x.val} 
+    pressed={x.isPressed}
+    uniqueVal={x.id}
+    handleClick={togglePressed}
+    />)
+  const wordList = word.map(x => <Word 
+    key={x.id} 
+    value={x.val} 
+    found={x.isFound}
+    uniqueVal={x.id}
+    />)
+  
+  console.log(word)
   return (
     <>
       <div>
         <h3>Life remaining: {life}</h3>
-        {/* <h1>{word}</h1> */}
+        
         <div className='word-list'>
           {wordList}
         </div>

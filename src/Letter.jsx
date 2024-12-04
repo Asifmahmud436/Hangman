@@ -3,7 +3,7 @@ export default function Letter(props){
         
         <button 
         className={props.pressed==true ? 'greenBtn':''}
-        onClick={() => props.handleClick(props.uniqueVal)}
+        onClick={() => props.handleClick(props.uniqueVal,props.value)}
         >{props.value}</button>
         
     )
